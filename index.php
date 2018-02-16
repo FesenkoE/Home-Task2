@@ -147,4 +147,4 @@ if (empty($username)) {
         newUser();
     }
 }
-print_r($user['answer']);
+print_r(findAll());
