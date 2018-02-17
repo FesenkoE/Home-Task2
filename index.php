@@ -76,8 +76,8 @@ function startTest()
     if (strtolower(trim($answer)) === "y") {
         echo "Отлично, тогда начнем!\n";
         $user['username'] = $username;
-        $user['score'] = $score;
-        $user['question'] = $questionNumber;
+        $user['score'] = 0;
+        $user['question'] = 1;
         $user['answer'] = [];
         save($user);
     } elseif (strtolower(trim($answer)) === "n") {
@@ -155,10 +155,15 @@ if (empty($username)) {
             $answer = ask("Хотите пройти еще раз? [y\\n] \n");
             if ($answer == 'y') {
                 clear();
+                unset($user);
+                startTest();
+                print_r($user);
                 newUser();
             } else {
                 currentUser();
             }
+        } else {
+            currentUser();
         }
     } else {
         echo "Вы у нас впервые!\n";
