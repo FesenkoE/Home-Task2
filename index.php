@@ -89,6 +89,7 @@ function startTest()
         startTest();
     }
 }
+
 function newUser()
 {
     global $questions, $user, $answers, $username;
@@ -109,6 +110,7 @@ EOT
 
     }
 }
+
 function currentUser()
 {
     global $questions, $user, $answers, $username;
@@ -131,6 +133,16 @@ EOT
     }
 }
 
+function green($item)
+{
+    echo "\033[1;32m$item\033[0m\n";
+}
+
+function red($item)
+{
+    echo "\033[31m$item\033[0m\n";
+}
+
 $username = ask("Укажите своё имя на латинском языке");
 
 if (empty($username)) {
@@ -139,7 +151,15 @@ if (empty($username)) {
     $user = find($username);
     if (($user['username']) == $username) {
         printf("Рады вас снова видеть, %s. Ваш текущий результат %s.\n", $user['username'], $user['score']);
-        currentUser();
+        if ($user['question'] == 5) {
+            $answer = ask("Хотите пройти еще раз? [y\\n] \n");
+            if ($answer == 'y') {
+                clear();
+                newUser();
+            } else {
+                currentUser();
+            }
+        }
     } else {
         echo "Вы у нас впервые!\n";
         $answer = ask("Предлагаем вам поучаствовать в нашей векторине. Вы согласны? [y\\n] \n");
@@ -147,4 +167,5 @@ if (empty($username)) {
         newUser();
     }
 }
-print_r(findAll());
+print_r($user);
+
